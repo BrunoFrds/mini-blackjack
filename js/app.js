@@ -1,3 +1,3 @@
-import { shuffleDeck } from "./deck.js";
+import { initGame } from "./game.js";
 
-console.log(shuffleDeck())
+initGame()
