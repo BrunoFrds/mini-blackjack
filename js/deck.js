@@ -1,3 +1,7 @@
+/**
+ * Crée un jeu de 52 cartes standard
+ * @returns {Array<{suit: string, value: string}>} Deck de cartes
+ */
 const createDeck = () => {
   const suits = ["♠", "♥", "♦", "♣"]
   const values = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
@@ -11,6 +15,10 @@ const createDeck = () => {
   return deck
 }
 
+/**
+ * Mélange un jeu de cartes avec l’algorithme de Fisher-Yates
+ * @returns {Array<{suit: string, value: string}>} Deck mélangé
+ */
 export const shuffleDeck = () => {
   let deckArray = createDeck()
   for (let i = deckArray.length - 1; i > 0; i--) {
