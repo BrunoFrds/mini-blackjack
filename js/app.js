@@ -1,3 +1,4 @@
-import { initGame } from "./game.js";
+import { initGame, hitCard } from "./game.js";
 
 initGame()
+hitCard()

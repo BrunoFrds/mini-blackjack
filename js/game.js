@@ -11,19 +11,25 @@ const drawCard = (deck) => {
   return deck.shift()
 }
 
+const playerContainer = document.querySelector("#player-cards .cards-container")
+const dealerContainer = document.querySelector("#dealer-cards .cards-container")
+
+const scorePlayerContainer = document.querySelector("#player-score")
+const scoreDealerContainer = document.querySelector("#dealer-score")
+
+const gameState = {
+  deck: [],
+  playerHand: [],
+  dealerHand: []
+}
+
 /**
  * Initialise une nouvelle partie de blackjack
  * Gère le reset de l'affichage, la création du deck
  * et la distribution initiale des cartes
- */
+*/
 export const initGame = () => {
   const newBtn = document.querySelector("#new-btn")
-
-  const playerContainer = document.querySelector("#player-cards .cards-container")
-  const dealerContainer = document.querySelector("#dealer-cards .cards-container")
-
-  const scorePlayerContainer = document.querySelector("#player-score")
-  const scoreDealerContainer = document.querySelector("#dealer-score")
 
   const containers = [playerContainer, dealerContainer]
   const sequence = [playerContainer, dealerContainer, playerContainer, dealerContainer]
@@ -34,25 +40,33 @@ export const initGame = () => {
     scoreDisplay(scorePlayerContainer, 0)
     scoreDisplay(scoreDealerContainer, 0)
 
-    const deck = shuffleDeck()
-
-    const delay = 1000 + index * 1000
-
-    let playerHand = []
-    let dealerHand = []
+    gameState.deck = shuffleDeck()
+    gameState.playerHand = []
+    gameState.dealerHand = []
 
     sequence.forEach((container, index) => {
       setTimeout(() => {
-        const card = drawCard(deck)
+        const card = drawCard(gameState.deck)
         displayCard(container, card)
         if (container === playerContainer) {
-          playerHand.push(card)
-          scoreDisplay(scorePlayerContainer, calculateScore(playerHand))
+          gameState.playerHand.push(card)
+          scoreDisplay(scorePlayerContainer, calculateScore(gameState.playerHand))
         } else {
-          dealerHand.push(card)
-          scoreDisplay(scoreDealerContainer, calculateScore(dealerHand))
+          gameState.dealerHand.push(card)
+          scoreDisplay(scoreDealerContainer, calculateScore(gameState.dealerHand))
         }
-      }, delay);
+      }, 1000 + index * 1000);
     })
+  })
+}
+
+const hitBtn = document.querySelector("#hit-btn")
+
+export const hitCard = () => {
+  hitBtn.addEventListener("click", () => {
+    const card = drawCard(gameState.deck)
+    displayCard(playerContainer, card)
+    gameState.playerHand.push(card)
+    scoreDisplay(scorePlayerContainer, calculateScore(gameState.playerHand))
   })
 }
