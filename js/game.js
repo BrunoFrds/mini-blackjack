@@ -36,6 +36,8 @@ export const initGame = () => {
 
     const deck = shuffleDeck()
 
+    const delay = 1000 + index * 1000
+
     let playerHand = []
     let dealerHand = []
 
@@ -50,7 +52,7 @@ export const initGame = () => {
           dealerHand.push(card)
           scoreDisplay(scoreDealerContainer, calculateScore(dealerHand))
         }
-      }, 1000 + (index * 1000));
+      }, delay);
     })
   })
 }

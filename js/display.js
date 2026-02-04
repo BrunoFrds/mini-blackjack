@@ -32,6 +32,11 @@ export const resetGameDisplay = (containers) => {
   containers.forEach((container) => resetDisplay(container))
 }
 
+/**
+ * Affiche le score dans un container DOM
+ * @param {HTMLElement} container
+ * @param {number} score
+ */
 export const scoreDisplay = (container, score) => {
-  container.textContent = `${score}`
+  container.textContent = score
 }
