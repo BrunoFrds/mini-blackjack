@@ -31,3 +31,7 @@ const resetDisplay = (container) => {
 export const resetGameDisplay = (containers) => {
   containers.forEach((container) => resetDisplay(container))
 }
+
+export const scoreDisplay = (container, score) => {
+  container.textContent = `${score}`
+}
