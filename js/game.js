@@ -6,7 +6,7 @@ import { calculateScore } from "./score.js"
  *
  * @param {{ suit: string, value: string }[]} deck - Deck de cartes mélangé
  * @returns {{ suit: string, value: string } | undefined} Carte tirée ou undefined si le deck est vide
- */
+*/
 const drawCard = (deck) => {
   return deck.shift()
 }
@@ -16,6 +16,9 @@ const dealerContainer = document.querySelector("#dealer-cards .cards-container")
 
 const scorePlayerContainer = document.querySelector("#player-score")
 const scoreDealerContainer = document.querySelector("#dealer-score")
+
+const hitBtn = document.querySelector("#hit-btn")
+const standBtn = document.querySelector("#stand-btn")
 
 const gameState = {
   deck: [],
@@ -40,6 +43,8 @@ export const initGame = () => {
     scoreDisplay(scorePlayerContainer, 0)
     scoreDisplay(scoreDealerContainer, 0)
 
+    hitBtn.disabled = false
+
     gameState.deck = shuffleDeck()
     gameState.playerHand = []
     gameState.dealerHand = []
@@ -60,8 +65,6 @@ export const initGame = () => {
   })
 }
 
-const hitBtn = document.querySelector("#hit-btn")
-
 export const hitCard = () => {
   hitBtn.addEventListener("click", () => {
     const card = drawCard(gameState.deck)
@@ -69,4 +72,23 @@ export const hitCard = () => {
     gameState.playerHand.push(card)
     scoreDisplay(scorePlayerContainer, calculateScore(gameState.playerHand))
   })
+}
+
+export const standGame = () => {
+  standBtn.addEventListener("click", () => {
+    hitBtn.disabled = true
+
+    dealerTurn()
+  })
+}
+
+const dealerTurn = () => {
+  if (calculateScore(gameState.dealerHand) < 17) {
+    setTimeout(() => {
+      const card = drawCard(gameState.deck)
+      displayCard(dealerContainer, card)
+      gameState.dealerHand.push(card)
+      scoreDisplay(scoreDealerContainer, calculateScore(gameState.dealerHand))
+    }, 1000)
+  }
 }
